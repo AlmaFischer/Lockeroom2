@@ -307,7 +307,7 @@ def casillero_detail(request, casillero_id):
             mqtt_message = {
                     "cam_target": casillero.camera.name,  # Nombre de la cámara asociada
                     "id": casillero.locker_id[-1],  # ID del casillero (último carácter del ID)
-                    "admin": "False",
+                    "admin": "True",
                     "use_cam": "True",
                     "password": "",
                     "action": "open"
