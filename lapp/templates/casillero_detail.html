@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Detalles del Casillero{% endblock %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h1 style="color: #1F3B4D;">Detalles del Casillero: {{ casillero.locker_id }}</h1>
+
+        <!-- Formulario para cambiar la contraseña -->
+        <form method="POST" autocomplete="off">
+            <div class="card mt-3">
+                <div class="card-header" style="background-color: #1ABC9C; color: #FFFFFF;">
+                    Cambiar Contraseña
+                </div>
+                <div class="card-body" style="background-color: #F5F5F5;">
+                    {% csrf_token %}
+                    
+                    <!-- Campo de contraseña -->
+                    <div class="form-group">
+                        {% if user.is_superuser %}
+                        <p style="color: #2C3E50;">Contraseña actual: {{ casillero.password }}</p>
+                        {% endif %}
+                        
+                        <label for="id_password" style="color: #2C3E50;">Contraseña</label>
+                        <input type="password" name="password" id="id_password" class="form-control" required autocomplete="new-password" style="border-color: #1F3B4D;">
+                        
+                        <!-- Mostrar errores de validación -->
+                        {% if form.password.errors %}
+                            <div class="alert alert-danger mt-2" style="background-color: #E74C3C; color: #FFFFFF;">
+                                <ul>
+                                    {% for error in form.password.errors %}
+                                    <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <button type="submit" name="cambiar_contraseña" class="btn" style="background-color: #1F3B4D; border: none; color: #FFFFFF;">
+                        Cambiar Contraseña
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <br>
+
+        {% if user.is_superuser %}
+        <!-- Formulario para cambiar el usuario -->
+        <form method="POST" autocomplete="off">
+            <div class="card mt-3">
+                <div class="card-header" style="background-color: #1ABC9C; color: #FFFFFF;">
+                    Cambiar Usuario
+                </div>
+                <div class="card-body" style="background-color: #F5F5F5;">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="nuevo_usuario_id" style="color: #2C3E50;">Nuevo Usuario</label>
+                        <select name="nuevo_usuario_id" id="nuevo_usuario_id" class="form-control" autocomplete="off" style="border-color: #1F3B4D;">
+                            {% for usuario in usuarios %}
+                            <option value="{{ usuario.id }}" {% if usuario == casillero.usuario %}selected{% endif %}>{{ usuario.username }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" name="cambiar_usuario" class="btn" style="background-color: #F4C542; border: none; color: #2C3E50;">
+                        Cambiar Usuario
+                    </button>
+                </div>
+            </div>
+        </form>
+        {% endif %}
+
+        <!-- Formulario para abrir el casillero -->
+        <form method="POST" autocomplete="off">
+            {% csrf_token %}
+            <button type="submit" name="abrir_casillero" class="btn" style="background-color: #1ABC9C; border: none; color: #FFFFFF; margin-top: 20px;">
+                Abrir Casillero
+            </button>
+        </form>
+
+        <!-- Formulario para cerrar el casillero -->
+        <form method="POST" autocomplete="off">
+            {% csrf_token %}
+            <button type="submit" name="cerrar_casillero" class="btn" style="background-color: #E74C3C; border: none; color: #FFFFFF; margin-top: 10px;">
+                Cerrar Casillero
+            </button>
+        </form>
+    </div>
+{% endblock %}

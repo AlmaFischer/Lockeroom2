@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 class="text-center" style="color: #1F3B4D;">Bienvenido a la aplicación</h1>
+
+    <!-- Estadísticas -->
+    <div class="row mt-5">
+        <div class="col-md-4">
+            <div class="card text-center" style="background-color: #1ABC9C; color: white;">
+                <div class="card-body">
+                    <h5 class="card-title">Casilleros Disponibles</h5>
+                    <p class="card-text">Todos los casilleros que actualmente te pertenecen, ¡puedes cambiar la contraseña si quieres!</p>
+                    <a href="{% url 'casilleros_list' %}" class="btn btn-light">Ver casilleros</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center" style="background-color: #F4C542; color: white;">
+                <div class="card-body">
+                    <h5 class="card-title">Estadísticas</h5>
+                    <p class="card-text">¡Obtén información sobre el uso de los casilleros para mantenerte informado!</p>
+                    <a href="{% url 'estadisticas' %}" class="btn btn-light">Ver estadísticas</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center" style="background-color: #E74C3C; color: white;">
+                <div class="card-body">
+                    <h5 class="card-title">Camaras Disponibles</h5>
+                    <p class="card-text">Todas las camaras automaticamente registradas, ¡haz ping en ellas para ver si estan conectadas!</p>
+                    <a href="{% url 'camera_list' %}" class="btn btn-light">Ver cámaras</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

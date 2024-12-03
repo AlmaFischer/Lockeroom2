@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}Lista de Cámaras{% endblock %}
+
+{% block content %}
+    <h1 class="my-4" style="color: #1F3B4D; font-weight: 700;">Lista de Cámaras</h1>
+    <div class="row">
+        {% for camera in cameras %}
+            <div class="col-md-4 mb-4">
+                <div class="card" style="border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+                    <div class="card-body" data-camera-name="{{ camera.name }}">
+                        <h5 class="card-title" style="color: #1F3B4D;">{{ camera.name }}</h5>
+                        <p class="card-text">Casilleros manejados: {{ camera.lockers_count }}</p>
+                        <a href="{% url 'camera_detail' camera.pk %}" class="btn btn-info">Detalles</a>
+                        <button class="btn btn-success" onclick="sendPing('{{ camera.name }}')">Ping</button>
+                        
+                        <!-- Mostrar el estado de is_ping -->
+                        {% if camera.is_ping %}
+                            <p class="mt-2 text-success ping-status">Ping activo (hasta 30 segundos)</p>
+                        {% else %}
+                            <p class="mt-2 text-danger ping-status">Ping inactivo</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        function sendPing(cameraName) {
+            // Realiza la solicitud AJAX para hacer ping
+            fetch(`/camera/ping/${cameraName}/`)
+                .then(response => response.json())
+                .then(data => {
+                    //alert(data.message);  // Muestra el mensaje de éxito
+                    setTimeout(() => {
+                        location.reload(); // Recarga la página después de 5 segundos
+                        //valert("Update");
+                    }, 1000);
+                    
+
+                })
+                .catch(error => {
+                    alert('Error al enviar ping');
+                });
+        }
+    </script>
+{% endblock %}

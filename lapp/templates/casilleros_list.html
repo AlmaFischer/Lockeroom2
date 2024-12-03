@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h1 class="my-4" style="color: #1F3B4D; font-weight: 700;">Casilleros Disponibles</h1>
+        <table class="table table-bordered" style="border-radius: 10px; overflow: hidden;">
+            <thead>
+                <tr style="background-color: #1ABC9C; color: #FFFFFF;">
+                    <th style="background-color: #1ABC9C; color: #FFFFFF; border-radius: 10px 10px 0 0;">ID</th>
+                    <th style="background-color: #1ABC9C; color: #FFFFFF; border-radius: 10px 10px 0 0;">Usuario</th>
+                    <th style="background-color: #1ABC9C; color: #FFFFFF; border-radius: 10px 10px 0 0;">Contraseña</th>
+                    <th style="background-color: #1ABC9C; color: #FFFFFF; border-radius: 10px 10px 0 0;">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for casillero in casilleros %}
+                <tr>
+                    <td style="background-color: #FFFFFF; color: #000000; border-radius: 0 0 10px 0;">{{ casillero.locker_id }}</td>
+                    <td style="background-color: #FFFFFF; color: #000000; border-radius: 0 0 10px 0;">{{ casillero.usuario.username }}</td>
+                    <!-- Mostrar la contraseña solo si es superusuario -->
+                    <td style="background-color: #FFFFFF; color: #000000; border-radius: 0 0 10px 0;">
+                        {% if user.is_superuser %}
+                            {{ casillero.password }}
+                        {% else %}
+                            ****
+                        {% endif %}
+                    </td>
+                    <td>
+                        <!-- Botón que redirige a los detalles del casillero -->
+                        <a href="{% url 'casillero_detail' casillero.id %}" class="btn btn-info" style="background-color: #1F3B4D; border: none; color: #FFFFFF; border-radius: 5px;">
+                            Ver Detalles
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center" style="color: #1F3B4D;">No hay casilleros disponibles</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% block title %}Estadísticas | Lockeroom{% endblock %}
+
+{% block content %}
+    <h1 class="my-4" style="color: #1F3B4D; font-weight: 700;">Estadísticas del Sistema</h1>
+    
+    {% if not user.is_superuser %}
+        <div class="row mt-4">
+            <!-- Aperturas Totales por Día -->
+            <div class="col-md-6">
+                <div class="card mb-4" style="border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+                    <div class="card-header" style="background-color: #1ABC9C; color: #FFFFFF;">Aperturas Totales por Día (Últimos 7 Días)</div>
+                    <div class="card-body" style="background-color: #FFFFFF; color: #2C3E50;">
+                        <ul>
+                            {% for apertura in aperturas_usuario_por_dia %}
+                                <li>{{ apertura.day }}: {{ apertura.total_aperturas }} aperturas</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- Casillero con Más Aperturas -->
+            <div class="col-md-6">
+                <div class="card mb-4" style="border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+                    <div class="card-header" style="background-color: #1ABC9C; color: #FFFFFF;">Casillero con Más Aperturas</div>
+                    <div class="card-body" style="background-color: #FFFFFF; color: #2C3E50;">
+                        <h4 class="card-title">{{ casillero_mas_aperturas.locker__locker_id }} - {{ casillero_mas_aperturas.total_aperturas }} aperturas</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <!-- Casillero Más Tiempo Cerrado -->
+            <div class="col-md-6">
+                <div class="card mb-4" style="border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+                    <div class="card-header" style="background-color: #1ABC9C; color: #FFFFFF;">Casillero Más Tiempo Cerrado</div>
+                    <div class="card-body" style="background-color: #FFFFFF; color: #2C3E50;">
+                        <h4 class="card-title">{{ casillero_mas_tiempo_cerrado.locker_id }}</h4>
+                        <p>Última apertura: {{ casillero_mas_tiempo_cerrado.last_opened }}</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Casillero con Más Tiempo Ocupado -->
+            <div class="col-md-6">
+                <div class="card mb-4" style="border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+                    <div class="card-header" style="background-color: #1ABC9C; color: #FFFFFF;">Casillero con Más Tiempo Ocupado</div>
+                    <div class="card-body" style="background-color: #FFFFFF; color: #2C3E50;">
+                        <h4 class="card-title">{{ casillero_mas_tiempo_ocupado.locker_id }}</h4>
+                        <p>Asignado desde: {{ casillero_mas_tiempo_ocupado.usuario.date_joined }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% elif user.is_superuser %}
+        <div class="row">
+            <!-- Total de Casilleros, Casilleros Ocupados y Casilleros Disponibles -->
+            <div class="col-md-4">
+                <div class="card mb-4" style="border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+                    <div class="card-header" style="background-color: #1ABC9C; color: #FFFFFF;">Total de Casilleros</div>
+                    <div class="card-body" style="background-color: #FFFFFF; color: #2C3E50;">
+                        <h4 class="card-title">{{ total_casilleros }}</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4" style="border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+                    <div class="card-header" style="background-color: #1ABC9C; color: #FFFFFF;">Casilleros Ocupados</div>
+                    <div class="card-body" style="background-color: #FFFFFF; color: #2C3E50;">
+                        <h4 class="card-title">{{ casilleros_ocupados }}</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4" style="border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+                    <div class="card-header" style="background-color: #1ABC9C; color: #FFFFFF;">Casilleros Disponibles</div>
+                    <div class="card-body" style="background-color: #FFFFFF; color: #2C3E50;">
+                        <h4 class="card-title">{{ casilleros_disponibles }}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <!-- Total de Usuarios y Controladores Activos -->
+            <div class="col-md-4">
+                <div class="card mb-4" style="border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+                    <div class="card-header" style="background-color: #1ABC9C; color: #FFFFFF;">Total de Usuarios</div>
+                    <div class="card-body" style="background-color: #FFFFFF; color: #2C3E50;">
+                        <h4 class="card-title">{{ total_usuarios }}</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4" style="border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+                    <div class="card-header" style="background-color: #1ABC9C; color: #FFFFFF;">Controladores Activos</div>
+                    <div class="card-body" style="background-color: #FFFFFF; color: #2C3E50;">
+                        <h4 class="card-title">{{ controladores_activos }}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <!-- Aperturas Totales por Día y Métricas Adicionales -->
+            <div class="col-md-6">
+                <div class="card mb-4" style="border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+                    <div class="card-header" style="background-color: #1ABC9C; color: #FFFFFF;">Aperturas Totales por Día (Últimos 7 Días)</div>
+                    <div class="card-body" style="background-color: #FFFFFF; color: #2C3E50;">
+                        <ul>
+                            {% for apertura in aperturas_por_dia %}
+                                <li>{{ apertura.day }}: {{ apertura.total_aperturas }} aperturas</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card mb-4" style="border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+                    <div class="card-header" style="background-color: #1ABC9C; color: #FFFFFF;">Métricas Adicionales</div>
+                    <div class="card-body" style="background-color: #FFFFFF; color: #2C3E50;">
+                        <ul>
+                            <li>Aperturas Promedio por Casillero: {{ aperturas_promedio_por_locker }}</li>
+                            <li>Casilleros por Cámara Promedio: {{ casilleros_por_camara_promedio }}</li>
+                            <li>Usuarios con más de un Casillero: {{ usuarios_con_multiples_casilleros|length }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <!-- Distribución de Casilleros por Usuario -->
+            <div class="col-md-12">
+                <div class="card mb-4" style="border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+                    <div class="card-header" style="background-color: #1ABC9C; color: #FFFFFF;">Distribución de Casilleros por Usuario</div>
+                    <div class="card-body" style="background-color: #FFFFFF; color: #2C3E50;">
+                        <img src="data:image/png;base64,{{ grafico_casilleros_por_usuario }}" alt="Gráfico de Casilleros por Usuario" style="width: 100%; height: auto;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

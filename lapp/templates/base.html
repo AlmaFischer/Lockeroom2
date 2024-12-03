@@ -1,0 +1,103 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}LockerRoom{% endblock %}</title>
+
+    <!-- Agregar Bootstrap desde archivos estáticos -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+    {% block extra_css %}{% endblock %}
+
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #F5F5F5; /* Gris claro */
+            color: #2C3E50; /* Negro carbón */
+        }
+        .navbar {
+            background-color: #1F3B4D; /* Azul oscuro */
+        }
+        .navbar a, .navbar .navbar-brand {
+            color: #1ABC9C; /* Verde azulado */
+        }
+        .navbar a:hover {
+            color: #F4C542; /* Amarillo dorado */
+        }
+        .navbar-nav .nav-item .nav-link {
+            color: #FFFFFF; /* Blanco */
+        }
+        .navbar-nav .nav-item .nav-link:hover {
+            color: #F4C542; /* Amarillo dorado en hover */
+        }
+        .navbar-nav .nav-item.active .nav-link {
+            color: #1ABC9C; /* Verde azulado para el enlace activo */
+        }
+        .dropdown-menu {
+            background-color: #1F3B4D; /* Azul oscuro */
+        }
+        .dropdown-item {
+            color: #FFFFFF; /* Blanco */
+        }
+        .dropdown-item:hover {
+            background-color: #17404A; /* Azul oscuro más intenso */
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container"> <!-- Usar container para mayor control -->
+            <a class="navbar-brand" href="{% url 'home' %}">LockerRoom</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'casilleros_list' %}">Mis Casilleros</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'estadisticas' %}">Estadísticas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'camera_list' %}">Cámaras</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    {% if user.is_authenticated %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Mi Perfil
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="{% url 'profile' %}">Ver Perfil</a></li>
+                            <li><a class="dropdown-item" href="{% url 'account_logout' %}">Cerrar sesión</a></li>
+                        </ul>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'account_login' %}">Iniciar sesión</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'account_register' %}">Registrarse</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Agregar los scripts de Bootstrap desde archivos estáticos -->
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

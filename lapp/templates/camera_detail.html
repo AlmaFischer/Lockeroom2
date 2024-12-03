@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}Detalle de Cámara{% endblock %}
+
+{% block content %}
+    <h1 class="my-4" style="color: #1F3B4D;">Detalles de {{ camera.name }}</h1>
+    <div class="card" style="border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+        <div class="card-body">
+            <h5 class="card-title" style="color: #1F3B4D;">{{ camera.name }}</h5>
+            <p class="card-text"><strong>Casilleros manejados:</strong> {{ camera.lockers_count }}</p>
+            <p class="card-text"><strong>Identificador:</strong> {{ camera.id }}</p>
+            <a href="{% url 'camera_list' %}" class="btn btn-primary">Volver a la lista</a>
+        </div>
+    </div>
+{% endblock %}
