@@ -11,9 +11,9 @@ python manage.py collectstatic --no-input
 # Apply any outstanding database migrations
 python manage.py migrate
 
-if [[ "$CREATE_SUPERUSER" == "true" ]]; then
-    echo "Creando superusuario..."
-    python manage.py createsuperuser --no-input
-else
-    echo "Variable CREATE_SUPERUSER no definida o no es 'true'. Saltando la creación de superusuario."
-fi
+#if [[ "$CREATE_SUPERUSER" == "true" ]]; then
+#    echo "Creando superusuario..."
+#    python manage.py createsuperuser --no-input
+#else
+#    echo "Variable CREATE_SUPERUSER no definida o no es 'true'. Saltando la creación de superusuario."
+#fi
