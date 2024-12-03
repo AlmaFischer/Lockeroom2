@@ -31,7 +31,11 @@ SOCIALACCOUNT_LOGIN_ON_GET = True
 ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_AUTHENTICATED_REDIRECTS = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "https://mysite-x3dq.onrender.com",  # Reemplaza con el dominio de tu servicio
+    "localhost",
+    "127.0.0.1"
+]
 LOGIN_URL = 'accounts/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
