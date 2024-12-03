@@ -32,9 +32,13 @@ ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_AUTHENTICATED_REDIRECTS = True
 
 ALLOWED_HOSTS = [
-    "https://mysite-x3dq.onrender.com",  # Reemplaza con el dominio de tu servicio
+    "mysite-x3dq.onrender.com",  # Reemplaza con el dominio de tu servicio
     "localhost",
     "127.0.0.1"
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://mysite-x3dq.onrender.com"  # Incluye el prefijo https:// aquí
 ]
 LOGIN_URL = 'accounts/'
 LOGIN_REDIRECT_URL = '/'
