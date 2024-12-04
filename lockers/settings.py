@@ -201,7 +201,7 @@ DEFAULT_FROM_EMAIL = 'noresponder.grupo6pds@gmail.com'
 
 # settings.py
 
-MQTT_SERVER = 'test.mosquitto.org'  # Broker address (EMQX for example) hive
+MQTT_SERVER = 'broker.emqx.io'  # Broker address (EMQX for example) hive
 MQTT_PORT = 1883  # Default MQTT port (non-SSL)
 MQTT_KEEPALIVE = 60  # Keep alive time in seconds
 MQTT_USER = 'PDS123'  # Optional username
