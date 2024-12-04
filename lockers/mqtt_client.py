@@ -191,6 +191,8 @@ def send_message(topic, message):
 # Configuración del cliente MQTT
 client = mqtt.Client()
 client.username_pw_set(settings.MQTT_USER, settings.MQTT_PASSWORD)
+
+client.tls_set(settings.MQTT_TLS_CA_CERTS)
 client.on_connect = on_connect
 client.on_message = on_message
 client.on_disconnect = on_disconnect
