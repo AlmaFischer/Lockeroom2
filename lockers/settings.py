@@ -202,10 +202,12 @@ DEFAULT_FROM_EMAIL = 'noresponder.grupo6pds@gmail.com'
 # settings.py
 
 MQTT_SERVER = 'broker.emqx.io'  # Broker address (EMQX for example) hive
-MQTT_PORT = 1883  # Default MQTT port (non-SSL)
+MQTT_PORT = 8883  # Default MQTT port (non-SSL)
 MQTT_KEEPALIVE = 60  # Keep alive time in seconds
 MQTT_USER = 'PDS123'  # Optional username
 MQTT_PASSWORD = 'PDS123'  # Optional password
+MQTT_USE_TLS = True
+MQTT_TLS_CA_CERTS = BASE_DIR / "certs" / "broker.emqx.io-ca.crt"
 
 
 STATIC_URL = '/static/'
