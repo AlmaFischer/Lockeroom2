@@ -30,6 +30,7 @@ DEBUG = False
 SOCIALACCOUNT_LOGIN_ON_GET = True
 ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_AUTHENTICATED_REDIRECTS = True
+ACCOUNT_ALLOW_REGISTRATION = True
 
 ALLOWED_HOSTS = [
     "mysite-x3dq.onrender.com",  # Reemplaza con el dominio de tu servicio
@@ -200,7 +201,7 @@ DEFAULT_FROM_EMAIL = 'noresponder.grupo6pds@gmail.com'
 
 # settings.py
 
-MQTT_SERVER = 'broker.emqx.io'  # Broker address (EMQX for example)
+MQTT_SERVER = 'broker.hivemq.com'  # Broker address (EMQX for example) hive
 MQTT_PORT = 1883  # Default MQTT port (non-SSL)
 MQTT_KEEPALIVE = 60  # Keep alive time in seconds
 MQTT_USER = 'PDS123'  # Optional username
