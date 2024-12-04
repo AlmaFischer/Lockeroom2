@@ -186,4 +186,4 @@ client.on_message = on_message
 
 # Conexión al broker
 client.connect(settings.MQTT_SERVER, settings.MQTT_PORT, settings.MQTT_KEEPALIVE)
-client.loop_forever()
+client.loop_start()
