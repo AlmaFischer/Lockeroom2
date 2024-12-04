@@ -30,6 +30,17 @@ def on_connect(client, userdata, flags, rc):
         #client.subscribe("ping_g15")
     else:
         print("Failed to connect. Return code:", rc)
+        
+def on_disconnect(client, userdata, rc):
+    print("Disconnected, attempting to reconnect...")
+    while True:
+        try:
+            client.reconnect()
+            break
+        except:
+            time.sleep(5)
+
+client.on_disconnect = on_disconnect
 
 # Callback para manejar los mensajes recibidos
 def on_message(client, userdata, msg):
